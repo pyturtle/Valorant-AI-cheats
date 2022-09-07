@@ -2,8 +2,6 @@
 #include <hiduniversal.h>
 #include <SPI.h>
 #include "hidmouserptparser.h"
-#include <Wire.h>
-#include <usbhub.h>
 
 USB Usb;
 HIDUniversal Hid(&Usb);
@@ -15,8 +13,9 @@ int dxn;
 int dyn;
 int index = 0;
 int num_size = 0;
-int length;
 
+
+int jump = 127;
 
 void setup()
 {
@@ -27,7 +26,7 @@ void setup()
 
     if (Usb.Init() == -1)
         Serial.println("OSC did not start.");
-    delay(50);
+        delay(50);
 
     if (!Hid.SetReportParser(0, &Mou))
         ErrorMessage<uint8_t>(PSTR("SetReportParser"), 1);
@@ -140,37 +139,37 @@ void loop()
             // Serial.println(dx+":"+dy);
             if (dx > 0)
             {
-                while (dx > 20)
+                while (dx > jump)
                 {
-                    dx -= 20;
-                    Mouse.move(20, 0);
+                    dx -= jump;
+                    Mouse.move(jump, 0);
                 }
                 Mouse.move(dx, 0);
             }
             else if (dx < 0)
             {
-                while (dx < -20)
+                while (dx < -jump)
                 {
-                    dx += 20;
-                    Mouse.move(-20, 0);
+                    dx += jump;
+                    Mouse.move(-jump, 0);
                 }
                 Mouse.move(dx, 0);
             }
             if (dy >= 0)
             {
-                while (dy > 20)
+                while (dy > jump)
                 {
-                    dy -= 20;
-                    Mouse.move(0, 20);
+                    dy -= jump;
+                    Mouse.move(0, jump);
                 }
                 Mouse.move(0, dy);
             }
             else if (dy <= 0)
             {
-                while (dy < -20)
+                while (dy < -jump)
                 {
-                    dy += 20;
-                    Mouse.move(0, -20);
+                    dy += jump;
+                    Mouse.move(0, -jump);
                 }
                 Mouse.move(0, dy);
             }

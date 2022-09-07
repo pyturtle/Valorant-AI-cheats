@@ -105,8 +105,8 @@ if __name__ == "__main__":
     """
     Main part  of the program
     """
+    target_multiply= [0,1.01,1.025,1.05,1.05,1.05] #depending on the screen ratio how much you move the mouse
     no_fov_cooldown = [True]
-    target_multiply= [0,0,0,0,3.35,3.4]
     triggerbot = False
     triggerbot_toggle = [True]
     silent_aim = False
@@ -115,12 +115,12 @@ if __name__ == "__main__":
     aim_assist = False
     send_next = [True]
     aim_assist_toggle = [True]
-    model = torch.hub.load(r'C:\Users\PyPit\OneDrive\Documents\CODE\Valorant_arduino\yolov5-master', 'custom', path=r"C:\Users\PyPit\OneDrive\Documents\CODE\Valorant_arduino\scripts\best_nano.engine", source='local').eval().cuda()#loading model onto gpu
-    model.conf = 0.40
-    model.iou = 0.65
-    model.classes  = [1]
-    model.maxdet = 10
-    model.amp = True
+    model = torch.hub.load(r'C:\Users\PyPit\OneDrive\Documents\CODE\Valorant_arduino\yolov5', 'custom', path=r"C:\Users\PyPit\OneDrive\Documents\CODE\Valorant_arduino\scripts\best_nano_new.engine", source='local').eval().cuda()#loading model onto gpu
+    model.conf = 0.40# model confidance threshold
+    model.iou = 0.65# overlap threshhold threshold
+    model.classes  = [1] # which classe the model detects
+    model.maxdet = 10# max detections
+    model.amp = True# amps model 
     region = (int(MONITOR_WIDTH/2-MONITOR_WIDTH/MONITOR_SCALE/2),int(MONITOR_HEIGHT/2-MONITOR_HEIGHT/MONITOR_SCALE/2),int(MONITOR_WIDTH/2+MONITOR_WIDTH/MONITOR_SCALE/2),int(MONITOR_HEIGHT/2+MONITOR_HEIGHT/MONITOR_SCALE/2))
     x,y,width,height = region
     screenshot_center = [int((width-x)/2),int((height-y)/2)]
